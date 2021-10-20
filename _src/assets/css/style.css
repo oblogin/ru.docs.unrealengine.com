@@ -1,0 +1,28 @@
+.dict {
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px dotted gray;
+    cursor: help;
+    font-weight: 500;
+}
+
+.main-content table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0 0 20px 0;
+}
+
+.main-content table thead th {
+    min-width: 120px;
+    padding: 5px 10px;
+    background: #e6e6e6;
+    border: #e6e6e6 1px solid;
+    border-bottom: #e6e6e6 1px solid;
+}
+
+.main-content table tbody td {
+    padding: 5px 10px;
+    border: #e6e6e6 1px solid;
+    vertical-align: top;
+}

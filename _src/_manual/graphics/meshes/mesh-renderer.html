@@ -1,0 +1,140 @@
+---
+title: Рендер сетки
+permalink: /manual/graphics/meshes/mesh-renderer
+---
+<p>
+    Рендер сетки получает геометрию из фильтра сетки и визуализирует ее в позиции определенной компонентом Transform у игрового объекта.
+</p>
+
+<figure class="figure">
+    <img src="/assets/images/manual/graphics/meshes/mesh-renderer/class-MeshRenderer-0.png" class="figure-img img-fluid rounded" alt="...">
+    <figcaption class="figure-caption text-center">
+        Компонент Mesh Renderer, как он отображается в окне Inspector, когда для параметра Receive Global Illumination установлено значение Light Probes.
+    </figcaption>
+</figure>
+
+
+<p>
+    Эта страница содержит следующие разделы:
+</p>
+
+<ul>
+    <li>Рендер сетки</li>
+    <li>Материалы</li>
+    <li>Освещение</li>
+    <li>Lightmapping</li>
+        <ul>
+            <li>Зонды</li>
+            <li>Дополнительные настройки</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Материалы</h2>
+
+<p>
+    В Инспекторе, в компоненте Рендер Сетки, в разделе Материалы перечислены все материалы, которые использует рендер сетки. Сетки, импортированные из программ 3D-моделирования, могут использовать несколько Материалов и каждая подсетка использует один Материал из списка.
+</p>
+
+<p>
+    Если сетка содержит больше материалов, чем подсеток, Unity рендерит последнюю подсетку с каждым из оставшихся материалов, один поверх другого. Это позволяет настроить многопроходный рендеринг на этой подсетке. Однако это может повлиять на производительность во время выполнения. Полностью непрозрачные Материалы перезаписывают предыдущие слои, что приводит к снижению производительности без каких-либо преимуществ.
+</p>
+
+<table>
+    <colgroup>
+        <col style="text-align:left;">
+        <col style="text-align:left;">
+    </colgroup>
+
+    <thead>
+    <tr>
+        <th style="text-align:left;"><strong>Свойства:</strong></th>
+        <th style="text-align:left;"><strong>Функции:</strong></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td style="text-align:left;"><strong>Размер</strong></td>
+        <td style="text-align:left;">Укажите количество Материалов в Рендере Сетки. Если уменьшить размер списка Материалов, Unity удаляет элементы с конца списка.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Элемент</strong></td>
+        <td style="text-align:left;">Список Материалов в Рендере Сетки в числовом порядке. Первый элемент всегда называется Element 0.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Освещение</h2>
+
+<p>
+    Раздел Освещение содержит свойства того как этот Рендер Сетки взаимодействует с освещением в Unity.
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th style="text-align:left;" colspan="2"><strong>Свойства:</strong></th>
+        <th style="text-align:left;"><strong>Функции:</strong></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td style="text-align:left;" colspan="2"><strong>Отбрасывание теней (Cast Shadows)</strong></td>
+        <td style="text-align:left;">Укажите, отбрасывание тени для сетки, когда на нее светит подходящий Свет.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;">On</td>
+        <td style="text-align:left;">Сетка отбрасывает тень, когда на нее светит Свет, создающий тень.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;">Off</td>
+        <td style="text-align:left;">Сетка не отбрасывает тени.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;">Двухсторонний (Two Sided)</td>
+        <td style="text-align:left;" colspan="2">
+            Сетка отбрасывает тени с обеих сторон. Чтобы Enlighten Realtime и Baked Illumination и Прогрессивная Светокарта поддерживали двусторонние тени, материал, назначенный целевому рендереру сетки, должен поддерживать Double Sided Global Illumination.
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;">Только тени</td>
+        <td style="text-align:left;">Тени от сетки видны, но не сама сетка.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;" colspan="2"><strong>Receive Shadows</strong></td>
+        <td style="text-align:left;">Включите эту опцию чтобы сетка отображала все отбрасываемые на нее тени. Поддерживается только при использовании Прогрессивного Лайтмапа.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;" colspan="2">
+            <strong>Глобальное освещение</strong>
+        </td>
+        <td style="text-align:left;">
+            Выберите это свойство, чтобы включить флаг Глобального Освещения в Static Editor Flags игрового объекта. Это свойство включает рендерер сетки данного игрового объекта в расчеты глобального освещения. Эти вычисления происходят при предварительном расчете данных об освещении во время запекания. Это свойство действует только в том случае, если вы включили для этой сцены такие настройки глобального освещения, как Baked Global Illumination или Enlighten Realtime Global Illumination. Это свойство включает опции получения глобального освещения.
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left;" colspan="2"><strong>Receive Global Illumination</strong></td>
+        <td style="text-align:left;">Select an option to determine whether Unity gathers global illumination data for this <a class="tooltipMoreInfoLink" href="class-MeshRenderer.html">GameObject’s Mesh Renderer</a> from lightmaps or <span class="tooltip"><a href="LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a href="LightProbes.html">More info</a><br><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe">Glossary</a></span></span></span> at runtime. This selection does not directly affect precomputation. However, when you choose the <strong>Light Probes</strong> option, Unity does not calculate lightmaps for the Renderer during precomputation, which can significantly reduce bake times. This property is only editable if you enable <a href="class-MeshRenderer.html#Lighting">Contribute Global Illumination</a>. <br><br>If <strong>Contribute Global Illumination</strong> is disabled, <strong>Receive Global Illumination</strong> defaults to the Light Probes setting. This property only takes effect if you enable a Global Illumination setting such as <a href="class-LightingSettings.html#MixedLighting">Baked Global Illumination</a> or Enlighten <a href="class-LightingSettings.html#RealtimeLighting">Realtime Global Illumination</a> for this Scene.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;"><span class="tooltip"><strong>Lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" href="Lightmapping.html">More info</a><br><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap">Glossary</a></span></span></span></td>
+        <td style="text-align:left;">Select this option if Unity should gather global illumination data for this Mesh Renderer from lightmaps.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"></td>
+        <td style="text-align:left;">Light Probes</td>
+        <td style="text-align:left;">Select this option if Unity should gather global illumination data for this Mesh Renderer from <a href="LightProbes.html">Light Probes</a> in the Scene.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;" colspan="2"><strong>Prioritize illumination</strong></td>
+        <td style="text-align:left;">Enable this property to always include this GameObject in Enlighten Realtime Global Illumination calculations. It ensures that the GameObject is affected by distant emissives, even those which are normally excluded from Global Illumination calculations for performance reasons."<br><br>This property is visible only if <strong>Contribute GI</strong> is enabled in the GameObject’s <a href="StaticObjects.html">Static Editor Flags</a>, your Project uses the Built-in Render Pipeline, and Enlighten Realtime Global Illumination is enabled in your Scene.</td>
+    </tr>
+    </tbody>
+</table>
