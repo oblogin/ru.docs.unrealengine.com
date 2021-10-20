@@ -217,7 +217,7 @@ const dictionary = [
     {
         ru: "Project Window",
         en: "Project Window", // "Project View"
-        root: [["project","window"], [["project","view"]]],
+        root: [["project","window"], ["project","view"]],
         desc: "Окно, в котором отображается содержимое папки Assets (вкладка Project).",
         link: "/Manual/ProjectView.html"
     },

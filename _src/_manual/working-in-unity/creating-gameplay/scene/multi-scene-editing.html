@@ -1,0 +1,240 @@
+---
+title: Редактирование нескольких сцен
+permalink: /Manual/MultiSceneEditing.html
+---
+
+<p>Редактирование нескольких сцен позволяет одновременно иметь несколько сцен, открытых в редакторе и облегчает управление сценами во время выполнения.</p>
+
+<p>Возможность иметь несколько открытых сцен в редакторе позволяет создавать большие потоковые миры и улучшает рабочий процесс при совместной работе над редактированием сцен.</p>
+
+<p>На этой странице описаны:</p>
+
+<ul>
+    <li>Интеграция редактирования нескольких сцен в редакторе</li>
+    <li>API скриптов редактора и API скриптов времени выполнения</li>
+    <li>Текущие известные проблемы</li>
+</ul>
+
+<h2>В редакторе</h2>
+
+<p>
+    Чтобы открыть новую сцену и добавить ее к текущему списку сцен в Hierarchy, либо выберите <em>Open Scene Additive</em> в контекстном меню для актива сцены, либо перетащите одну или несколько сцен из окна проекта в Hierarchy Window.
+</p>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingOpenSceneAdditive.png" alt="Open Scene Additive добавит выбранный актив сцены к текущим сценам, показанным в иерархии">
+    <figcaption>Open Scene Additive добавит выбранный актив сцены к текущим сценам, показанным в иерархии</figcaption>
+</figure>
+
+<p>
+    Если в редакторе открыто несколько сцен, содержимое каждой сцены отображается отдельно в Hierarchy Window. Содержимое каждой сцены отображается под разделительной полосой сцены, на которой показано название сцены и ее состояние сохранения.
+</p>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingHierarchy.png" alt="Hierarchy Window показывающее несколько одновременно открытых сцен">
+    <figcaption>Hierarchy Window показывающее несколько одновременно открытых сцен</figcaption>
+</figure>
+
+<p>
+    Пока сцены присутствуют в Hierarchy Window их можно <strong>загрузить</strong> или <strong>выгрузить</strong>, чтобы показать или скрыть игровые объекты, содержащиеся в каждой сцене. Это отличается от <strong>добавления</strong> и <strong>удаления</strong> их из окна иерархии.
+</p>
+
+<p>
+    Разделители сцен могут быть свернуты в иерархии, что может помочь вам ориентироваться в иерархии, если у вас загружено много сцен.
+</p>
+
+<p>
+    При работе над несколькими сценами каждая измененная сцена должна сохранять свои изменения, поэтому одновременно могут быть открыты несколько несохраненных сцен. Сцены с несохраненными изменениями будут отмечены звездочкой рядом с названием на панели разделения сцен.
+</p>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingUnsavedScene.png" alt="Звездочка в разделителе сцен указывает на то, что в этой сцене есть несохраненные изменения">
+    <figcaption>Звездочка в разделителе сцен указывает на то, что в этой сцене есть несохраненные изменения</figcaption>
+</figure>
+
+<p>
+    Каждую сцену можно сохранить отдельно с помощью контекстного меню в разделительной панели. Выбор пункта Save Scene в меню файла или нажатие Ctrl/Cmd + S сохранит изменения во <strong>всех</strong> открытых сценах.
+</p>
+
+<p>Контекстное меню в разделительных полосах сцены позволяет выполнять другие действия над выбранной сценой. </p>
+
+<h4>
+    Выпадающее меню для загруженных сцен
+</h4>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingLoadedSceneMenu.png" alt="">
+</figure>
+
+<table>
+    <tbody>
+    <tr>
+        <td style="text-align:left;"><strong>Set Active Scene</strong></td>
+        <td style="text-align:left;">Это позволяет вам указать, в какой сцене создаются / вводятся новые игровые объекты. Всегда должна быть одна сцена, отмеченная как активная.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Save Scene</strong></td>
+        <td style="text-align:left;">Сохраняет изменения только для выбранной сцены.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Save Scene As</strong></td>
+        <td style="text-align:left;">Сохраняет выбранную сцену вместе с любыми текущими изменениями как новый актив Scene.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Save All</strong></td>
+        <td style="text-align:left;">Сохраняет изменения во всех сценах.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Unload Scene</strong></td>
+        <td style="text-align:left;">Выгружает сцену, но сохраняет ее в окне Hierarchy.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Remove Scene</strong></td>
+        <td style="text-align:left;">Выгружает и удаляет сцену из окна Иерархия.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Select Scene Asset</strong></td>
+        <td style="text-align:left;">Выбирает актив сцены в окне проекта.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>GameObject</strong></td>
+        <td style="text-align:left;">Предоставляет подменю, позволяющее создавать игровой объект в выбранной сцене. Меню повторяет элементы, доступные в главном меню игрового объекта в Unity.</td>
+    </tr>
+    </tbody>
+</table>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingGameObjectCreateMenu.png" alt="Подменю игрового объекта в меню разделительной панели Scene">
+    <figcaption>Подменю игрового объекта в меню разделительной панели Scene</figcaption>
+</figure>
+
+<h4>Выпадающее меню для незагруженных сцен:</h4>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingUnloadedSceneMenu.png" alt="">
+</figure>
+
+<table>
+    <colgroup>
+        <col style="text-align:left;">
+        <col style="text-align:left;">
+    </colgroup>
+
+    <tbody>
+    <tr>
+        <td style="text-align:left;"><strong>Load Scene</strong></td>
+        <td style="text-align:left;">Загружает содержимое сцены</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Remove Scene</strong></td>
+        <td style="text-align:left;">Удалите сцену из окна Hierarchy.</td>
+    </tr>
+    <tr>
+        <td style="text-align:left;"><strong>Select Scene Asset</strong></td>
+        <td style="text-align:left;">Выбирает актив сцены в Project Window.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Запекание Lightmaps с несколькими сценами</h2>
+
+<p>
+    Чтобы запечь данные Lightmap сразу для нескольких сцен, необходимо открыть сцены, которые вы хотите запечь, выключить режим "Auto" в окне Lighting Window и нажать кнопку Build для построения освещения.
+</p>
+
+<p>
+    Входными данными для расчетов освещения являются статическая геометрия и освещение из всех сцен. Поэтому тени и отскоки света глобального освещения будут работать во всех сценах. Однако Lightmaps и данные Enlighten Realtime Global Illumination разделены на данные, которые загружаются/выгружаются отдельно для каждой сцены. Атласы Lightmaps и данные Enlighten Realtime Global Illumination разделены между сценами. Это означает, что Lightmaps между сценами никогда не используются совместно и могут быть безопасно выгружены при выгрузке сцены. Данные Light Probes в настоящее время всегда общие и все Light Probes для всех сцен, запеченных вместе, загружаются одновременно.
+</p>
+
+<p>В качестве альтернативы можно автоматизировать построение Lightmaps для нескольких сцен, используя функцию <a href="/ScriptReference/Lightmapping.BakeMultipleScenes.html">Lightmapping.BakeMultipleScenes</a> в редакторе скриптов.</p>
+
+<h2>Запекание данных Navmesh с несколькими сценами</h2>
+
+<p>Чтобы запечь данные Navmesh сразу для нескольких сцен, необходимо открыть сцены, которые вы хотите запечь, и нажать кнопку Bake в Navigation Window. Данные Navmesh будут запечены в один актив, общий для всех загруженных сцен. Данные будут сохранены в папку, соответствующую имени текущей активной сцены (например, ActiveSceneName/NavMesh.asset). Все загруженные сцены будут совместно использовать этот актив Navmesh. После запекания Navmesh необходимо сохранить все сцены, чтобы ссылка на сцену и Navmesh была постоянной.</p>
+
+<p>В качестве альтернативы можно автоматизировать построение данных Navmesh для нескольких сцен, используя функцию <a href="../ScriptReference/AI.NavMeshBuilder.BuildNavMeshForMultipleScenes.html">NavMeshBuilder.BuildNavMeshForMultipleScenes</a> в редакторе скриптов.</p>
+
+<h2>Запекание данных окклюзионной обработки с несколькими сценами</h2>
+
+<p>
+    Чтобы запечь данные окклюзионной обработки сразу для нескольких сцен, откройте сцены, которые вы хотите запечь, откройте окно Occlusion Culling (меню: Window > Rendering > Occlusion Culling) и нажмите кнопку Bake. Данные окклюзионной обработки сохраняются в актив под названием OcclusionCullingData.asset в папке, совпадающей с именем текущей активной сцены. Например, Assets/ActiveSceneName/OcclusionCullingData.asset. Ссылка на данные добавляется в каждую открытую сцену. После запекания данных окклюзионной обработки сохраните затронутые сцены, чтобы ссылка Scene-to-occlusion-data стала постоянной.
+</p>
+
+<p>При дополнительной загрузке сцены, если она имеет ту же ссылку на данные об окклюзии, что и активная сцена, статические рендеры и информация об окклюзии порталов для этой сцены инициализируются из данных об окклюзии. В дальнейшем система отбора окклюзии работает так, как если бы все статические рендеры и порталы были запечены в одной Сцене.</p>
+
+<h2>Режим воспроизведения</h2>
+
+<p>В режиме Play при наличии нескольких сцен в иерархии появится дополнительная сцена под названием <em>DontDestroyOnLoad</em>.</p>
+
+<p>Prior to Unity 5.3, any objects you would instantiate in Playmode marked as “DontDestroyOnLoad” would still show up in the hierarchy. These objects are not considered part of any scene but for Unity to still show the objects, and for you to inspect them, these objects are now shown as part of the special DontDestroyOnLoad scene.</p>
+
+<p>You do not have access to the DontDestroyOnLoad scene and it is not available at runtime.</p>
+
+<h2>Scene-specific settings</h2>
+
+<p>A number of settings are specific to each scene. These are:</p>
+
+<ul>
+    <li>RenderSettings and LightmapSettings (both found in the Lighting Window)</li>
+    <li>NavMesh settings</li>
+    <li>Scene settings in the Occlusion Culling Window.</li>
+</ul>
+
+<p>The way it works is that each scene will manage its own settings and only settings associated with that scene will be saved to the scene file.</p>
+
+<p>If you have multiple scenes open, the settings that are used for rendering and navmesh are the ones from the <strong>active scene</strong>. This means that if you want to change the settings of a scene, you must either open only one scene and change the settings, or make the scene in question the active scene and change the settings.</p>
+
+<p>When you switch active scene in the editor or at runtime, all the settings from the new scene will be applied and replace all previous settings.</p>
+
+<h2>Scripting</h2>
+
+<h3>Editor scripting</h3>
+
+<p>For editor scripting we provide a <a href="../ScriptReference/SceneManagement.Scene.html">Scene struct</a> and <a href="../ScriptReference/SceneManagement.EditorSceneManager.html">EditorSceneManager</a> API and a <a href="../ScriptReference/SceneManagement.SceneSetup.html">SceneSetup</a> utility class.</p>
+
+<p>The <a href="../ScriptReference/SceneManagement.Scene.html">Scene struct</a> is available both in the editor and at runtime and contains a handful of read-only properties relating to the scene itself, such as its name and asset path.</p>
+
+<p>The <a href="../ScriptReference/SceneManagement.EditorSceneManager.html">EditorSceneManager class</a> is only available in the editor. It is derived from SceneManager and has a number of functions that allow you to implement all the Multi Scene Editing features described above via editor scripting.</p>
+
+<p>The <a href="../ScriptReference/SceneManagement.SceneSetup.html">SceneSetup class</a> is a small utility class for storing information about a scene currently in the hierarchy.</p>
+
+<p>The <a class="tooltipMoreInfoLink" href="../ScriptReference/Undo.html">Undo</a> and <a href="../ScriptReference/PrefabUtility.html">PrefabUtility</a> classes have been extended to support multiple scenes. You can now instantiate a <span class="tooltip"><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Prefab">Glossary</a></span></span></span> in a given scene using
+    [PrefabUtility.InstantiatePrefab], and you can move objects to the root of a scene in an un-doable manner using
+    (Undo.MoveGameObjectToScene)[ScriptRef:Undo.MoveGameObjectToScene]</p>
+
+<p>
+    <strong>NOTE</strong>: <em>To use <code>Undo.MoveGameObjectToScene</code>, you must make sure the GameObject is already at the root of the scene it is currently in.</em>
+</p>
+
+<h3>Runtime scripting</h3>
+
+<p>For scripting at Runtime, the functions to work with multiple scenes such as <strong>LoadScene</strong> and <strong>UnloadScene</strong> are found on the <a href="../ScriptReference/SceneManagement.SceneManager.html">SceneManager</a> class.</p>
+
+<h2>Notes</h2>
+
+<p>In the File menu <em>Save Scene As</em> will only save the active scene. <em>Save Scene</em> will save all modified scenes, including prompting you to name the Untitled scene if it exists.</p>
+
+<figure>
+    <img src="/assets/images/manual/working-in-unity/creating-gameplay/scene/multi-scene-editing/MultiSceneEditingProjectMenuCreateScene.png" alt="Creating a new Scene asset from the Project windows Create menu">
+    <figcaption>Creating a new Scene asset from the Project window’s Create menu</figcaption>
+</figure>
+
+<h2>Tips and tricks</h2>
+
+<p>It is possible to add a scene to the hierarchy while keeping it its <em>unloaded</em> state by holding Alt while dragging. This gives you the option to load the scene later, when desired.</p>
+
+<p>New scenes can be created using the <em>Create</em> menu in the project window. New scenes will contain the default setup of Game Objects.</p>
+
+<p>To avoid having to set up your hierarchy every time you restart unity or to make it easy to store different setups you can use <a href="../ScriptReference/SceneManagement.EditorSceneManager.GetSceneManagerSetup.html">EditorSceneManager.GetSceneManagerSetup</a> to get a list of SceneSetup objects which describes the current setup. You can then serialize these into a ScriptableObject or something else along with any other information you might want to store about your scene setup. To restore the hierarchy simply recreate the list of SceneSetups and use <a href="../ScriptReference/SceneManagement.EditorSceneManager.RestoreSceneManagerSetup.html">EditorSceneManager.RestoreSceneManagerSetup</a>.</p>
+
+<p>At runtime to get the list of loaded scenes simply get sceneCount and iterate over the scenes using <a href="../ScriptReference/SceneManagement.SceneManager.GetSceneAt.html">GetSceneAt</a>.</p>
+
+<p>You can get the scene a GameObject belongs to through <a href="../ScriptReference/GameObject-scene.html">GameObject.scene</a> and you can move a GameObject to the root of a scene using <a href="../ScriptReference/SceneManagement.SceneManager.MoveGameObjectToScene.html">SceneManager.MoveGameObjectToScene</a>.</p>
+
+<p>It is recommended to avoid using DontDestroyOnLoad to persist manager GameObjects that you want to survive across scene loads. Instead, create a <strong>manager scene</strong> that has all your managers and use <a href="../ScriptReference/SceneManagement.SceneManager.LoadScene.html">SceneManager.LoadScene(<em>&lt;path&gt;</em>, LoadSceneMode.Additive)</a> and <a href="../ScriptReference/SceneManagement.SceneManager.UnloadScene.html">SceneManager.UnloadScene</a> to manage your game progress.</p>
+
+<h2>Known issues</h2>
+
+<ul>
+    <li>Cross-Scene references are not supported, and are prevented in Edit mode. In Play mode they are allowed, because Scenes cannot be saved.</li>
+</ul>
